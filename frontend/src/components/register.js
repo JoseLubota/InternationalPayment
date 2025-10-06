@@ -10,16 +10,27 @@ export default class Register extends React.Component {
         password: ""
     };
 
-    handleChange = (event) => {
+    handleChange =  (event) => {
         const {name, value} = event.target;
         this.setState({ [name]: value})
     };
 
-    handleSubmit = (event) =>{
+    handleSubmit = async (event) =>{
         event.preventDefault()
-        console.log('Form submitted')
-        // Add logic later
-    }
+        try{
+            const response = await fetch("http://localhost:4000/api/auth/register",{
+                method: "POST",
+                headers: {"Content-Type": "application/json"},
+                body: JSON.stringify(this.state),
+            });
+            const data = await response.json();
+            console.log(data);
+            alert(data.message || "User Registered");
+        }catch(error){
+            console.error(error);
+            alert("Registration Failed")
+        }
+    };
 
     render(){
         return(
