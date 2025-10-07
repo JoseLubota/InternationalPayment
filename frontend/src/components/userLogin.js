@@ -12,10 +12,37 @@ export default class UserLogin extends React.Component {
         this.setState({ [name]: value})
     };
 
-    handleSubmit = (event) =>{
+    handleSubmit = async (event) =>{
         event.preventDefault()
-        console.log('Form submitted')
-        // Add logic later
+        const{ username, password, accountNumber} = this.state;
+
+        try{
+            const response = await fetch("http://localhost:4000/api/auth/login", {
+                method: "POST",
+                headers: {"Content-Type": "application/json"},
+                body: JSON.stringify({username, accountNumber, password}),
+            });
+
+            const data =await response.json();
+
+            if(!response.ok){
+                alert(data.message || "Login Failed");
+                return
+            }
+            //Save token to localhost
+            localStorage.setItem("token", data.token);
+            localStorage.setItem("user", JSON.stringify(data.user));
+
+            alert("Login Successful!");
+            console.log("user details: ", data.user);
+
+            // redirect to ???
+            window.location.href = "/";
+        }catch(error){
+            console.error("Error: ", error);
+            alert("Something went wrong. Try again.");
+
+        }
     }
 
     render(){

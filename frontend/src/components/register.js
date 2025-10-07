@@ -3,8 +3,9 @@ import {Link} from "react-router-dom";
 export default class Register extends React.Component {
 
     state = {
+        username: "",
         fullname: '',
-        id: "",
+        idNumber: "",
         accountNumber: "",
         email: "",
         password: ""
@@ -25,7 +26,7 @@ export default class Register extends React.Component {
             });
             const data = await response.json();
             console.log(data);
-            alert(data.message || "User Registered");
+            alert(data.message || "Could not save user, Please try again");
         }catch(error){
             console.error(error);
             alert("Registration Failed")
@@ -36,6 +37,15 @@ export default class Register extends React.Component {
         return(
             <div>
                 <form onSubmit={this.handleSubmit}>
+
+                    <div>
+                        <input type="text"
+                        value={this.state.username}
+                        name="username"
+                        placeholder="Username"
+                        onChange={this.handleChange}/>
+                    </div>
+
                     <div>
                         <input type="text"
                         value={this.state.fullname}
@@ -46,9 +56,9 @@ export default class Register extends React.Component {
 
                     <div>
                         <input type="text"
-                        name="id"
+                        name="idNumber"
                         placeholder="ID Number"
-                        value={this.state.id}
+                        value={this.state.idNumber}
                         onChange={this.handleChange}/>
                     </div>
 
