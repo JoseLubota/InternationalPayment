@@ -77,4 +77,32 @@ router.get("/users", async (req, res) => {
     }
 })
 
+// Recover username
+router.post("/recover-username", async (req, res) =>{
+    try{
+        const {fullname, idNumber, accountNumber} = req.body;
+
+        if(!fullname || !idNumber || !accountNumber){
+            return res.status(400).json({message: "All fields are required"})
+        }
+
+        // Find user matching all fields
+        const user = await User.findOne({
+            fullname,
+            idNumber,
+            accountNumber,
+        });
+
+        if(!User){
+            return res.status(404).json({message: "No username found"})
+        }
+
+        // Return username
+
+        res.json({username: user.username});
+    }catch(err){
+        res.status(500).json({error: err.message})
+    }
+})
+
 export default router;

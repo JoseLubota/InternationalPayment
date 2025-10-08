@@ -1,10 +1,10 @@
 import React from "react";
-import {Link} from "react-router-dom";
+import {Link, Navigate} from "react-router-dom";
 export default class RecoverUsername extends React.Component {
 
     state = {
         fullname: '',
-        id: "",
+        idNumber: "",
         accountNumber: "",
     };
 
@@ -13,13 +13,43 @@ export default class RecoverUsername extends React.Component {
         this.setState({ [name]: value})
     };
 
-    handleSubmit = (event) =>{
+    handleSubmit = async (event) =>{
         event.preventDefault()
-        console.log('Form submitted')
-        // Add logic later
-    }
+
+        const {fullname, idNumber, accountNumber} = this.state;
+
+        try{
+            const response = await fetch("http://localhost:4000/api/auth/recover-username", {
+                method: "POST",
+                headers: {"Content-Type": "application/json"},
+                body: JSON.stringify({fullname, idNumber, accountNumber}),
+            });
+            
+            const data = await response.json();
+
+            if(!response.ok){
+                alert(data.message || "User not found");
+                return;
+            }
+
+            this.setState({recoveredUsername: data.username, redirect:true}); 
+
+        }catch(error){
+            console.error(error)
+            alert("Something went wrong. Try again");
+        }
+    };
 
     render(){
+        // If the submission occurs redirect user to a new page
+        if(this.state.redirect){
+            return(
+                <Navigate
+                to="/recovered-username"
+                state={{username: this.state.recoveredUsername}}
+                />
+            )
+        }
         return(
             <div>
                 <form onSubmit={this.handleSubmit}>
@@ -28,16 +58,16 @@ export default class RecoverUsername extends React.Component {
                         <input type="text"
                         value={this.state.fullname}
                         name="fullname"
-                        placeholder="Jane Doe"
+                        placeholder="eg. Jane Doe"
                         onChange={this.handleChange}/>
                     </div>
 
                     <div>
                         <label>ID Number</label>
                         <input type="text"
-                        name="id"
+                        name="idNumber"
                         placeholder="National ID or Passport"
-                        value={this.state.id}
+                        value={this.state.idNumber}
                         onChange={this.handleChange}/>
                     </div>
 
@@ -62,8 +92,12 @@ export default class RecoverUsername extends React.Component {
                     </div>
                 </form>
             </div>
+
+            
         );
 
+
     }
+
 
 }
