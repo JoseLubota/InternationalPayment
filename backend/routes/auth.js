@@ -42,6 +42,9 @@ router.post("/login", async(req, res) =>{
         const user = await User.findOne({username});
         if(!user) return res.status(400).json({message: "Invalid username"});
 
+        const checkAcountNumebr = await User.findOne({accountNumber});
+        if(!checkAcountNumebr) return res.status(400).json({message: "Invalid account Number"})
+
         const checkPassword = await bcrypt.compare(password, user.password)
         if(!checkPassword){
             return res.status(400).json({message: "Invalid password"});
@@ -102,6 +105,61 @@ router.post("/recover-username", async (req, res) =>{
         res.json({username: user.username});
     }catch(err){
         res.status(500).json({error: err.message})
+    }
+})
+
+// Check if user exists and return user id
+
+router.post("/recover-password", async(req, res) =>{
+    try{
+        const {username, accountNumber} = req.body;
+
+        const user = await User.findOne({username});
+        if(!user) return res.status(400).json({message: "Invalid username"});
+
+        const checkAcountNumebr = await User.findOne({accountNumber});
+        if(!checkAcountNumebr) return res.status(400).json({message: "Invalid account Number"})
+
+        // Send token and user information
+        res.json({
+            user: {
+                userID: user._id,
+                username: user.username,
+                accountNumber: user.accountNumber
+            },
+        });
+
+    }catch(err){
+        res.status(500).json({error: err.message})
+    }
+});
+
+// Let user reset password
+router.post("/reset-password", async (req, res) => {
+    try{
+
+        const {userID, password} = req.body;
+
+        //Check if both fields are provided
+        if(!userID || !password){
+            return res.status(400).json({message: "Password is required"});
+        }
+        // Find user by ID
+        const user = await User.findById(userID);
+        if(!user){
+            return res.status(404).json({message: "User not found"});
+        }
+        // Hash new password
+        const hashedPassword = await bcrypt.hash(password, 12);
+    
+        // Update user password
+        user.password = hashedPassword;
+        await user.save();
+    
+        res.json({message: "Password reset successfully"});
+
+    } catch(err){
+        res.status(500).json({error: err.message});
     }
 })
 

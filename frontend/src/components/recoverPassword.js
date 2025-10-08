@@ -1,5 +1,5 @@
 import React from "react";
-import {Link} from "react-router-dom";
+import {Link, Navigate} from "react-router-dom";
 export default class RecoverPassword extends React.Component {
 
     state = {
@@ -11,13 +11,43 @@ export default class RecoverPassword extends React.Component {
         this.setState({ [name]: value})
     };
 
-    handleSubmit = (event) =>{
+    handleSubmit = async (event) =>{
         event.preventDefault()
-        console.log('Form submitted')
-        // Add logic later
+
+        const {username, accountNumber} = this.state;
+
+        try{
+            const response = await fetch("http://localhost:4000/api/auth/recover-password", {
+                method: "POST",
+                headers: {"Content-Type": "application/json"},
+                body: JSON.stringify({username, accountNumber}),
+            });
+            
+            const data = await response.json();
+
+            if(!response.ok){
+                alert(data.message || "User not found");
+                return;
+            }
+
+            this.setState({user_id: data.user.userID, redirect:true}); 
+
+        }catch(error){
+            console.error(error)
+            alert("Something went wrong. Try again");
+        }
     }
 
     render(){
+                // If the submission occurs redirect user to a new page
+                if(this.state.redirect){
+                    return(
+                        <Navigate
+                        to="/reset-password"
+                        state={{userID: this.state.user_id}}
+                        />
+                    )
+                }
         return(
             <div>
                 <form onSubmit={this.handleSubmit}>
