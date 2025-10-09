@@ -3,6 +3,18 @@
   "WorkspaceRootPath": "C:\\Users\\lab_services_student\\source\\repos\\InternationalPayment\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\lab_services_student\\source\\repos\\InternationalPayment\\frontend\\src\\App.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:frontend\\src\\App.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\lab_services_student\\source\\repos\\InternationalPayment\\frontend\\src\\components\\views\\dashboard\\DashboardView.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:frontend\\src\\components\\views\\dashboard\\DashboardView.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\lab_services_student\\source\\repos\\InternationalPayment\\frontend\\src\\components\\views\\dashboard\\HomeView.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:frontend\\src\\components\\views\\dashboard\\HomeView.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\lab_services_student\\source\\repos\\InternationalPayment\\frontend\\src\\components\\views\\transactions\\VerifyTransactionsView.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
       "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:frontend\\src\\components\\views\\transactions\\VerifyTransactionsView.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
     }
@@ -27,6 +39,43 @@
             {
               "$type": "Document",
               "DocumentIndex": 0,
+              "Title": "App.js",
+              "DocumentMoniker": "C:\\Users\\lab_services_student\\source\\repos\\InternationalPayment\\frontend\\src\\App.js",
+              "RelativeDocumentMoniker": "frontend\\src\\App.js",
+              "ToolTip": "C:\\Users\\lab_services_student\\source\\repos\\InternationalPayment\\frontend\\src\\App.js",
+              "RelativeToolTip": "frontend\\src\\App.js",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAADAAAAATAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
+              "WhenOpened": "2025-10-09T15:26:25.728Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "DashboardView.js",
+              "DocumentMoniker": "C:\\Users\\lab_services_student\\source\\repos\\InternationalPayment\\frontend\\src\\components\\views\\dashboard\\DashboardView.js",
+              "RelativeDocumentMoniker": "frontend\\src\\components\\views\\dashboard\\DashboardView.js",
+              "ToolTip": "C:\\Users\\lab_services_student\\source\\repos\\InternationalPayment\\frontend\\src\\components\\views\\dashboard\\DashboardView.js",
+              "RelativeToolTip": "frontend\\src\\components\\views\\dashboard\\DashboardView.js",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAC8AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
+              "WhenOpened": "2025-10-09T15:25:45.314Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "HomeView.js",
+              "DocumentMoniker": "C:\\Users\\lab_services_student\\source\\repos\\InternationalPayment\\frontend\\src\\components\\views\\dashboard\\HomeView.js",
+              "RelativeDocumentMoniker": "frontend\\src\\components\\views\\dashboard\\HomeView.js",
+              "ToolTip": "C:\\Users\\lab_services_student\\source\\repos\\InternationalPayment\\frontend\\src\\components\\views\\dashboard\\HomeView.js",
+              "RelativeToolTip": "frontend\\src\\components\\views\\dashboard\\HomeView.js",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAACkAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
+              "WhenOpened": "2025-10-09T15:25:18.9Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
               "Title": "VerifyTransactionsView.js",
               "DocumentMoniker": "C:\\Users\\lab_services_student\\source\\repos\\InternationalPayment\\frontend\\src\\components\\views\\transactions\\VerifyTransactionsView.js",
               "RelativeDocumentMoniker": "frontend\\src\\components\\views\\transactions\\VerifyTransactionsView.js",
@@ -34,8 +83,7 @@
               "RelativeToolTip": "frontend\\src\\components\\views\\transactions\\VerifyTransactionsView.js",
               "ViewState": "AgIAABAAAAAAAAAAAAAYwH0AAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
-              "WhenOpened": "2025-10-09T15:24:15.632Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-10-09T15:24:15.632Z"
             }
           ]
         }
