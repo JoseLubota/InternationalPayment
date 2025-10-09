@@ -1,12 +1,10 @@
 {
   "ExpandedNodes": [
     "",
-    "\\frontend",
     "\\frontend\\src",
     "\\frontend\\src\\components",
     "\\frontend\\src\\components\\views",
     "\\frontend\\src\\components\\views\\auth"
   ],
-  "SelectedNode": "\\frontend\\src\\components\\views\\auth",
   "PreviewInSolutionExplorer": false
 }
