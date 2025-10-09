@@ -17,18 +17,20 @@ export default class UserLogin extends React.Component {
         const{ username, password, accountNumber} = this.state;
 
         try{
+            // Send data to Backend
             const response = await fetch("http://localhost:4000/api/auth/login", {
                 method: "POST",
                 headers: {"Content-Type": "application/json"},
                 body: JSON.stringify({username, accountNumber, password}),
             });
 
-            const data =await response.json();
+            const data = await response.json();
 
             if(!response.ok){
-                alert(data.message || "Login Failed");
+                alert(data.message || "Login Failed. Please check your details.");
                 return
             }
+
             //Save token to localhost
             localStorage.setItem("token", data.token);
             localStorage.setItem("user", JSON.stringify(data.user));

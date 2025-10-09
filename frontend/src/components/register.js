@@ -99,6 +99,33 @@ export default class Register extends React.Component {
                     </div>
 
                 </form>
+                <form>
+                    <div>
+                    <p><strong>Username</strong> Username must be 3-30 characters long.</p>
+                    </div>
+
+                    <div>
+                    <p><strong>Full Name</strong> Full name must contain only letters and spaces (3-50) character.</p>
+                    </div>
+
+                    <div>
+                    <p><strong>ID Number</strong> ID Number must be 3-20 digits.</p>
+
+                    </div>
+
+                    <div>
+                    <p><strong>Account Number</strong> Account number must be 6-15 digits. </p>
+                    </div>
+
+                    <div>
+                    <p><strong>Email</strong> Email must include me in the format "@example.com". </p>
+
+                    </div>
+
+                    <div>
+                    <p><strong>Password</strong> Must include a letter and number, and a minimum of 8 digits.</p>
+                    </div>
+                </form>
             </div>
         );
 

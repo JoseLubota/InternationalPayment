@@ -84,7 +84,7 @@ const ResetPassword = () => {
                 <div>
                     <h2>Password Reset.</h2>
                     <p>Your password has been reset successfully!</p>
-                    <Link to="/login">Return to login</Link>
+                    <Link to="/login">Back to  login</Link>
                 </div>
             )}
         </div>

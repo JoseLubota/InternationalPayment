@@ -2,6 +2,7 @@ import express from "express";
 import bcrypt from "bcryptjs";
 import jwt  from "jsonwebtoken";
 import User from "../models/User.js";
+import { validadeUserInput } from "../utils/validation.js";
 
 const router = express.Router();
 const JWT_SECRET = "8847ee188f91e31bcb45d6c4c6189c6ca948b9623a52b370d9715528ba253ce66838ce17f38af573320794b398565f6d04a80d062df3c2daa2a20d395d38df66"
@@ -10,6 +11,9 @@ const JWT_SECRET = "8847ee188f91e31bcb45d6c4c6189c6ca948b9623a52b370d9715528ba25
 
 router.post("/register", async(req, res) =>{
     try{
+
+        validadeUserInput(req.body);
+
         const {username, fullname, idNumber, accountNumber, email, password} = req.body;
         const existing = await User.findOne({email});
 
@@ -37,13 +41,16 @@ router.post("/register", async(req, res) =>{
 
 router.post("/login", async(req, res) =>{
     try{
+
+        validadeUserInput(req.body);
+
         const {username, accountNumber, password} = req.body;
 
         const user = await User.findOne({username});
-        if(!user) return res.status(400).json({message: "Invalid username"});
+        if(!user) return res.status(400).json({message: "Username not found"});
 
         const checkAcountNumebr = await User.findOne({accountNumber});
-        if(!checkAcountNumebr) return res.status(400).json({message: "Invalid account Number"})
+        if(!checkAcountNumebr) return res.status(400).json({message: "Account Number not found"})
 
         const checkPassword = await bcrypt.compare(password, user.password)
         if(!checkPassword){
@@ -82,6 +89,9 @@ router.get("/users", async (req, res) => {
 
 // Recover username
 router.post("/recover-username", async (req, res) =>{
+
+    validadeUserInput(req.body);
+
     try{
         const {fullname, idNumber, accountNumber} = req.body;
 
@@ -111,6 +121,9 @@ router.post("/recover-username", async (req, res) =>{
 // Check if user exists and return user id
 
 router.post("/recover-password", async(req, res) =>{
+
+    validadeUserInput(req.body);
+
     try{
         const {username, accountNumber} = req.body;
 
@@ -136,8 +149,10 @@ router.post("/recover-password", async(req, res) =>{
 
 // Let user reset password
 router.post("/reset-password", async (req, res) => {
-    try{
 
+    validadeUserInput(req.body);
+
+    try{
         const {userID, password} = req.body;
 
         //Check if both fields are provided
