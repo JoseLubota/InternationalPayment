@@ -10,7 +10,15 @@ dotenv.config()
 const app = express();
 
 // Set secure HTTP Headers
-app.use(helmet());
+app.use(helmet.contentSecurityPolicy({
+    directives : {
+        default: ["'self'"],
+        scriptSrc: ["'slfe'", "'unsafe-inline'", "'https://cdn.example.com'"],
+        styleSrc: ["'self'", "data:"],
+        fontSrc: ["'self'", "https://fonts.gstatic.com"],
+        },
+    })
+);
 
 app.use(express.json());
 
@@ -41,7 +49,7 @@ app.use((req, res, next) => {
     next();
 });
 
-// Web application Firewall - protection agains SQL Injection, XSS, etc
+// Web application Firewall - protection against SQL Injection, XSS, etc
 app.use((req, res, next) => {
     const payload = JSON.stringify(req.body);
     const backlist = [
