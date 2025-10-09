@@ -4,14 +4,19 @@ export default function Home() {
 
     return(
         <div>
+            <h1>International Payment System</h1>
+            
             <div>
-            <Link to="/register">Client</Link>
+                <Link to="/register">Register</Link>
             </div>
             
             <div>
-            <Link to="">Employee</Link>
+                <Link to="/login">Login</Link>
             </div>
 
+            <div>
+                <Link to="/payment">Make Payment</Link>
+            </div>
         </div>
     );
 
