@@ -22,7 +22,7 @@ export default function VerifyTransactionsView() {
 
         try {
             const token = localStorage.getItem("token");
-            const response = await fetch(`http://localhost:4000/api/transactions/verify/${transactionId}`, {
+            const response = await fetch(`https://localhost:4000/api/transactions/verify/${transactionId}`, {
                 method: "GET",
                 headers: {
                     "Authorization": `Bearer ${token}`

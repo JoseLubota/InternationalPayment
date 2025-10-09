@@ -7,6 +7,7 @@ import { PrimaryButton, SecondaryButton } from '../../components/shared/Button';
 export default function LoginView() {
     const [formData, setFormData] = useState({
         username: '',
+        accountNumber: '',
         password: ''
     });
 
@@ -17,13 +18,13 @@ export default function LoginView() {
 
     const handleSubmit = async (event) => {
         event.preventDefault();
-        const { username, password } = formData;
+        const { username, accountNumber, password } = formData;
 
         try {
-            const response = await fetch("http://localhost:4000/api/auth/login", {
+            const response = await fetch("https://localhost:4000/api/auth/login", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ username, password }),
+                body: JSON.stringify({ username, accountNumber, password }),
             });
 
             const data = await response.json();
@@ -61,6 +62,17 @@ export default function LoginView() {
                             value={formData.username}
                             name="username"
                             placeholder="Username"
+                            onChange={handleChange}
+                            required
+                        />
+                    </FormGroup>
+
+                    <FormGroup>
+                        <FormInput
+                            type="text"
+                            value={formData.accountNumber}
+                            name="accountNumber"
+                            placeholder="Account Number"
                             onChange={handleChange}
                             required
                         />

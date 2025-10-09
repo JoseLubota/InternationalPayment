@@ -20,7 +20,7 @@ export default function RecoverUsernameView() {
         const { email } = formData;
 
         try {
-            const response = await fetch("http://localhost:4000/api/auth/recover-username", {
+            const response = await fetch("https://localhost:4000/api/auth/recover-username", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ email }),

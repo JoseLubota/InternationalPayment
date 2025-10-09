@@ -23,7 +23,7 @@ export default function RecoverPasswordView() {
         const { email } = formData;
 
         try {
-            const response = await fetch("http://localhost:4000/api/auth/recover-password", {
+            const response = await fetch("https://localhost:4000/api/auth/recover-password", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ email }),
@@ -47,7 +47,7 @@ export default function RecoverPasswordView() {
         const { email, recoveryCode } = formData;
 
         try {
-            const response = await fetch("http://localhost:4000/api/auth/verify-recovery-code", {
+            const response = await fetch("https://localhost:4000/api/auth/verify-recovery-code", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ email, recoveryCode }),
@@ -81,7 +81,7 @@ export default function RecoverPasswordView() {
         }
 
         try {
-            const response = await fetch("http://localhost:4000/api/auth/reset-password", {
+            const response = await fetch("https://localhost:4000/api/auth/reset-password", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ email, recoveryCode, newPassword }),

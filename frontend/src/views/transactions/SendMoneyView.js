@@ -21,7 +21,7 @@ export default function SendMoneyView() {
 
         try {
             const token = localStorage.getItem("token");
-            const response = await fetch("http://localhost:4000/api/transactions/send", {
+            const response = await fetch("https://localhost:4000/api/transactions/send", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
