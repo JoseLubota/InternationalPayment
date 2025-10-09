@@ -7,20 +7,52 @@ import {
     validatePasswordStrength,
     isPasswordUnique
 } from "../utils/passwordSecurity.js";
+import {
+    validateRegistrationInput,
+    validateLoginInput,
+    checkForInjectionPatterns
+} from "../utils/inputValidation.js";
 
 const router = express.Router();
 const JWT_SECRET = process.env.JWT_SECRET || "8847ee188f91e31bcb45d6c4c6189c6ca948b9623a52b370d9715528ba253ce66838ce17f38af573320794b398565f6d04a80d062df3c2daa2a20d395d38df66"
 
-// Register new user with password security
+// Register new user with password security and input whitelisting
 router.post("/register", async(req, res) => {
     try {
         const {username, fullname, idNumber, accountNumber, email, password} = req.body;
         
-        // Input validation
+        // Input validation - check if all fields are present
         if (!username || !fullname || !idNumber || !accountNumber || !email || !password) {
             return res.status(400).json({
                 message: "All fields are required",
                 fields: ["username", "fullname", "idNumber", "accountNumber", "email", "password"]
+            });
+        }
+        
+        // INPUT WHITELISTING: Validate all inputs against whitelist regex patterns
+        const inputValidation = validateRegistrationInput({
+            username,
+            fullname,
+            idNumber,
+            accountNumber,
+            email
+        });
+        
+        if (!inputValidation.isValid) {
+            return res.status(400).json({
+                message: "Input validation failed",
+                errors: inputValidation.errors,
+                security: "Only specific characters are allowed in each field"
+            });
+        }
+        
+        // Additional injection pattern check for password (blacklist)
+        const passwordInjectionCheck = checkForInjectionPatterns(password);
+        if (!passwordInjectionCheck.isSafe) {
+            return res.status(400).json({
+                message: "Password contains prohibited patterns",
+                threats: passwordInjectionCheck.threats,
+                security: "Password contains characters that may be used in injection attacks"
             });
         }
         
@@ -101,16 +133,39 @@ router.post("/register", async(req, res) => {
     }
 });
 
-// Login with password verification
+// Login with password verification and input whitelisting
 router.post("/login", async(req, res) => {
     try {
         const {username, accountNumber, password} = req.body;
         
-        // Input validation
+        // Input validation - check if all fields are present
         if (!username || !accountNumber || !password) {
             return res.status(400).json({
                 message: "All fields are required",
                 fields: ["username", "accountNumber", "password"]
+            });
+        }
+        
+        // INPUT WHITELISTING: Validate inputs against whitelist regex patterns
+        const inputValidation = validateLoginInput({
+            username,
+            accountNumber
+        });
+        
+        if (!inputValidation.isValid) {
+            return res.status(400).json({
+                message: "Input validation failed",
+                errors: inputValidation.errors,
+                security: "Invalid characters detected in input"
+            });
+        }
+        
+        // Check password for injection patterns
+        const passwordInjectionCheck = checkForInjectionPatterns(password);
+        if (!passwordInjectionCheck.isSafe) {
+            return res.status(400).json({
+                message: "Invalid credentials",
+                security: "Prohibited patterns detected"
             });
         }
         
