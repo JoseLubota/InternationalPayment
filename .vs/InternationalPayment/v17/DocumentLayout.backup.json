@@ -3,20 +3,8 @@
   "WorkspaceRootPath": "C:\\Users\\lab_services_student\\source\\repos\\InternationalPayment\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\lab_services_student\\source\\repos\\InternationalPayment\\frontend\\src\\components\\views\\transactions\\MoneyReceivedView.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:frontend\\src\\components\\views\\transactions\\MoneyReceivedView.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\lab_services_student\\source\\repos\\InternationalPayment\\frontend\\src\\components\\views\\transactions\\MoneySentView.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:frontend\\src\\components\\views\\transactions\\MoneySentView.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\lab_services_student\\Source\\Repos\\InternationalPayment\\frontend\\src\\components\\views\\transactions\\SendMoneyView.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:frontend\\src\\components\\views\\transactions\\SendMoneyView.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\lab_services_student\\source\\repos\\InternationalPayment\\frontend\\src\\components\\views\\auth\\AccountRegisteredView.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:frontend\\src\\components\\views\\auth\\AccountRegisteredView.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\lab_services_student\\source\\repos\\InternationalPayment\\frontend\\src\\components\\views\\transactions\\VerifyTransactionsView.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:frontend\\src\\components\\views\\transactions\\VerifyTransactionsView.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
     }
   ],
   "DocumentGroupContainers": [
@@ -39,53 +27,14 @@
             {
               "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "MoneyReceivedView.js",
-              "DocumentMoniker": "C:\\Users\\lab_services_student\\source\\repos\\InternationalPayment\\frontend\\src\\components\\views\\transactions\\MoneyReceivedView.js",
-              "RelativeDocumentMoniker": "frontend\\src\\components\\views\\transactions\\MoneyReceivedView.js",
-              "ToolTip": "C:\\Users\\lab_services_student\\source\\repos\\InternationalPayment\\frontend\\src\\components\\views\\transactions\\MoneyReceivedView.js",
-              "RelativeToolTip": "frontend\\src\\components\\views\\transactions\\MoneyReceivedView.js",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAACoAAAAAAAAAAAAAAA==",
+              "Title": "VerifyTransactionsView.js",
+              "DocumentMoniker": "C:\\Users\\lab_services_student\\source\\repos\\InternationalPayment\\frontend\\src\\components\\views\\transactions\\VerifyTransactionsView.js",
+              "RelativeDocumentMoniker": "frontend\\src\\components\\views\\transactions\\VerifyTransactionsView.js",
+              "ToolTip": "C:\\Users\\lab_services_student\\source\\repos\\InternationalPayment\\frontend\\src\\components\\views\\transactions\\VerifyTransactionsView.js",
+              "RelativeToolTip": "frontend\\src\\components\\views\\transactions\\VerifyTransactionsView.js",
+              "ViewState": "AgIAABAAAAAAAAAAAAAYwH0AAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
-              "WhenOpened": "2025-10-09T15:21:41.493Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "MoneySentView.js",
-              "DocumentMoniker": "C:\\Users\\lab_services_student\\source\\repos\\InternationalPayment\\frontend\\src\\components\\views\\transactions\\MoneySentView.js",
-              "RelativeDocumentMoniker": "frontend\\src\\components\\views\\transactions\\MoneySentView.js",
-              "ToolTip": "C:\\Users\\lab_services_student\\source\\repos\\InternationalPayment\\frontend\\src\\components\\views\\transactions\\MoneySentView.js",
-              "RelativeToolTip": "frontend\\src\\components\\views\\transactions\\MoneySentView.js",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABUAAAACAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
-              "WhenOpened": "2025-10-09T15:20:02.881Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "SendMoneyView.js",
-              "DocumentMoniker": "C:\\Users\\lab_services_student\\Source\\Repos\\InternationalPayment\\frontend\\src\\components\\views\\transactions\\SendMoneyView.js",
-              "RelativeDocumentMoniker": "frontend\\src\\components\\views\\transactions\\SendMoneyView.js",
-              "ToolTip": "C:\\Users\\lab_services_student\\Source\\Repos\\InternationalPayment\\frontend\\src\\components\\views\\transactions\\SendMoneyView.js",
-              "RelativeToolTip": "frontend\\src\\components\\views\\transactions\\SendMoneyView.js",
-              "ViewState": "AgIAAEQAAAAAAAAAAAAYwFoAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
-              "WhenOpened": "2025-10-09T15:19:11.527Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "AccountRegisteredView.js",
-              "DocumentMoniker": "C:\\Users\\lab_services_student\\source\\repos\\InternationalPayment\\frontend\\src\\components\\views\\auth\\AccountRegisteredView.js",
-              "RelativeDocumentMoniker": "frontend\\src\\components\\views\\auth\\AccountRegisteredView.js",
-              "ToolTip": "C:\\Users\\lab_services_student\\source\\repos\\InternationalPayment\\frontend\\src\\components\\views\\auth\\AccountRegisteredView.js",
-              "RelativeToolTip": "frontend\\src\\components\\views\\auth\\AccountRegisteredView.js",
-              "ViewState": "AgIAAAgAAAAAAAAAAAAYwB4AAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
-              "WhenOpened": "2025-10-09T15:18:07.011Z",
+              "WhenOpened": "2025-10-09T15:24:15.632Z",
               "EditorCaption": ""
             }
           ]
