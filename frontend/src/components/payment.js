@@ -28,7 +28,8 @@ export default function Payment() {
                         { code: 'USD', name: 'US Dollar', symbol: '$' },
                         { code: 'EUR', name: 'Euro', symbol: '€' },
                         { code: 'GBP', name: 'British Pound', symbol: '£' },
-                        { code: 'JPY', name: 'Japanese Yen', symbol: '¥' }
+                        { code: 'JPY', name: 'Japanese Yen', symbol: '¥' },
+                        { code: 'ZAR', name: 'South African Rand', symbol: 'R' }
                     ]);
                 }
             } catch (error) {
@@ -38,12 +39,19 @@ export default function Payment() {
                     { code: 'USD', name: 'US Dollar', symbol: '$' },
                     { code: 'EUR', name: 'Euro', symbol: '€' },
                     { code: 'GBP', name: 'British Pound', symbol: '£' },
-                    { code: 'JPY', name: 'Japanese Yen', symbol: '¥' }
+                    { code: 'JPY', name: 'Japanese Yen', symbol: '¥' },
+                    { code: 'ZAR', name: 'South African Rand', symbol: 'R' }
                 ]);
             }
         };
 
         loadCurrencies();
+        
+        // Check if user is logged in
+        const token = localStorage.getItem('token');
+        if (!token) {
+            setError("Please log in first to make a payment. Click 'Login' to sign in.");
+        }
     }, []);
 
     const handleChange = (event) => {
@@ -82,7 +90,7 @@ export default function Payment() {
             // Get token from localStorage
             const token = localStorage.getItem('token');
             if (!token) {
-                setError("Please log in to make a payment");
+                setError("Please log in first to make a payment. Go to the login page and sign in.");
                 setLoading(false);
                 return;
             }
@@ -127,7 +135,16 @@ export default function Payment() {
         <div>
             <h2>International Payment</h2>
             
-            {error && <div style={{ color: 'red' }}>{error}</div>}
+            {error && (
+                <div style={{ color: 'red' }}>
+                    {error}
+                    {!localStorage.getItem('token') && (
+                        <div>
+                            <Link to="/login">Click here to login</Link>
+                        </div>
+                    )}
+                </div>
+            )}
 
             <form onSubmit={handleSubmit}>
                 <div>

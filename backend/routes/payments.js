@@ -26,6 +26,7 @@ const verifyToken = (req, res, next) => {
 // Create a new payment transaction
 router.post("/create", verifyToken, async (req, res) => {
     try {
+        console.log("Payment request received:", req.body);
         const {
             amount,
             currency,
@@ -39,18 +40,25 @@ router.post("/create", verifyToken, async (req, res) => {
 
         // Validate required fields
         if (!amount || !currency || !beneficiaryAccountNumber || !swiftCode) {
+            console.log("Validation failed - missing required fields");
             return res.status(400).json({ message: "Amount, currency, beneficiary account number, and SWIFT code are required" });
         }
 
         // Validate amount
         if (amount <= 0) {
+            console.log("Validation failed - invalid amount:", amount);
             return res.status(400).json({ message: "Amount must be greater than 0" });
         }
 
-        // Validate SWIFT code format
+        // Validate SWIFT code format (6 Uppercase Characters, 2 Alphaneumeric Characters, 3 Optional Alphaneumeric Characters)
+        const swiftCodeUpper = swiftCode.toUpperCase();
         const swiftCodeRegex = /^[A-Z]{6}[A-Z0-9]{2}([A-Z0-9]{3})?$/;
-        if (!swiftCodeRegex.test(swiftCode)) {
-            return res.status(400).json({ message: "Invalid SWIFT code format" });
+        console.log("Testing SWIFT code:", swiftCodeUpper, "against regex:", swiftCodeRegex);
+        if (!swiftCodeRegex.test(swiftCodeUpper)) {
+            console.log("Validation failed - invalid SWIFT code:", swiftCodeUpper);
+            return res.status(400).json({ 
+                message: `Invalid SWIFT code format: ${swiftCode}. Must be 8 or 11 characters (6 Uppercase Characters, 2 Alphaneumeric Characters, 3 Optional Alphaneumeric Characters)` 
+            });
         }
 
         // Create new payment transaction with SWIFT as default provider
@@ -68,6 +76,7 @@ router.post("/create", verifyToken, async (req, res) => {
         });
 
         await newPayment.save();
+        console.log("Payment saved successfully:", newPayment.transactionId);
 
         res.status(201).json({
             message: "Payment transaction created successfully",
@@ -124,7 +133,7 @@ router.get("/:transactionId", verifyToken, async (req, res) => {
     }
 });
 
-// Update payment status (for admin use or payment processing)
+// Update payment status for payment processing)
 router.patch("/:transactionId/status", verifyToken, async (req, res) => {
     try {
         const { transactionId } = req.params;
@@ -158,7 +167,20 @@ router.patch("/:transactionId/status", verifyToken, async (req, res) => {
     }
 });
 
-// Get supported currencies
+// Get all payments (for testing/debugging)
+router.get("/all", async (req, res) => {
+    try {
+        const payments = await Payment.find().populate('userId', 'username email');
+        res.json({
+            count: payments.length,
+            payments: payments
+        });
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+});
+
+// Get currencies
 router.get("/currencies/supported", (req, res) => {
     const supportedCurrencies = [
         { code: 'USD', name: 'US Dollar', symbol: '$' },
@@ -170,13 +192,14 @@ router.get("/currencies/supported", (req, res) => {
         { code: 'CHF', name: 'Swiss Franc', symbol: 'CHF' },
         { code: 'CNY', name: 'Chinese Yuan', symbol: '¥' },
         { code: 'SEK', name: 'Swedish Krona', symbol: 'kr' },
-        { code: 'NZD', name: 'New Zealand Dollar', symbol: 'NZ$' }
+        { code: 'NZD', name: 'New Zealand Dollar', symbol: 'NZ$' },
+        { code: 'ZAR', name: 'South African Rand', symbol: 'R' }
     ];
 
     res.json({ currencies: supportedCurrencies });
 });
 
-// Get supported payment providers (SWIFT only)
+// Get supported payment providers (SWIFT only...for now)
 router.get("/providers/supported", (req, res) => {
     const supportedProviders = [
         { 

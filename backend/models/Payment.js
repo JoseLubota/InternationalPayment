@@ -14,7 +14,7 @@ const paymentSchema = new mongoose.Schema({
     currency: {
         type: String,
         required: true,
-        enum: ['USD', 'EUR', 'GBP', 'JPY', 'CAD', 'AUD', 'CHF', 'CNY', 'SEK', 'NZD']
+        enum: ['USD', 'EUR', 'GBP', 'JPY', 'CAD', 'AUD', 'CHF', 'CNY', 'SEK', 'NZD', 'ZAR']
     },
     provider: {
         type: String,
@@ -37,7 +37,7 @@ const paymentSchema = new mongoose.Schema({
     swiftCode: {
         type: String,
         required: true,
-        match: /^[A-Z]{6}[A-Z0-9]{2}([A-Z0-9]{3})?$/
+        match: [/^[A-Z]{6}[A-Z0-9]{2}([A-Z0-9]{3})?$/, 'Invalid SWIFT code format']
     },
     beneficiaryAddress: {
         type: String,
@@ -47,7 +47,10 @@ const paymentSchema = new mongoose.Schema({
     transactionId: {
         type: String,
         unique: true,
-        required: true
+        required: true,
+        default: function() {
+            return 'TXN' + Date.now() + Math.random().toString(36).substr(2, 9).toUpperCase();
+        }
     },
     status: {
         type: String,
