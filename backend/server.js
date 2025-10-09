@@ -7,6 +7,7 @@ import fs from "fs";
 import path from "path";
 import { fileURLToPath } from "url";
 import authRoutes from "./routes/auth.js";
+import paymentRoutes from "./routes/payments.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -20,12 +21,18 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+// Test endpoint
+app.get("/test", (req, res) => {
+    res.json({ message: "Server is running!" });
+});
+
 // Routes
 app.use("/api/auth", authRoutes);
+app.use("/api/payments", paymentRoutes);
 
 
 // Connect to MongoDB
-const connectionString = process.env.ATLAS_URI;
+const connectionString = process.env.ATLAS_URI || "mongodb://localhost:27017/international-payment";
 
 mongoose
     .connect(connectionString)
@@ -34,7 +41,7 @@ mongoose
     })
     .catch((err) => {
         console.error("MongoDB connection error:", err);
-        process.exit(1);
+        console.log("Server will continue running without database connection");
     });
 
 // SSL/TLS Configuration
