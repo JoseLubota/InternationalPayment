@@ -3,25 +3,37 @@ import mongoose from "mongoose";
 import cors from "cors";
 import dotenv from "dotenv";
 import authRoutes from "./routes/auth.js";
-dotenv.config()
+
+dotenv.config();
 
 const app = express();
-app.use(express.json());
-app.use(cors());
 
-//Routes
+// Basic middleware
+app.use(cors());
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
+// Routes
 app.use("/api/auth", authRoutes);
 
 
-
 // Connect to MongoDB
-const connectionSting = process.env.ATLAS_URI
+const connectionString = process.env.ATLAS_URI;
+
 mongoose
-    .connect(connectionSting)
-    .then(() => console.log("connected to MongoDB Altas"))
-    .catch((err) => console.error(err));
+    .connect(connectionString)
+    .then(() => {
+        console.log(" Connected to MongoDB Atlas");
+    })
+    .catch((err) => {
+        console.error("MongoDB connection error:", err);
+        process.exit(1);
+    });
 
-// start server
-
-const PORT = process.env.PORT || 4000
-app.listen(PORT, () => console.log('Server running on port ',PORT));
+// Start server
+const PORT = process.env.PORT || 4000;
+app.listen(PORT, () => {
+    console.log('='.repeat(60));
+    console.log(`Server running on port ${PORT}`);
+    console.log('='.repeat(60));
+});
