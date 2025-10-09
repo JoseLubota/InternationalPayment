@@ -1,7 +1,10 @@
 {
   "ExpandedNodes": [
-    ""
+    "",
+    "\\frontend\\src",
+    "\\frontend\\src\\components",
+    "\\frontend\\src\\components\\views",
+    "\\frontend\\src\\components\\views\\auth"
   ],
-  "SelectedNode": "\\C:\\Users\\lab_services_student\\Source\\Repos\\InternationalPayment",
   "PreviewInSolutionExplorer": false
 }
