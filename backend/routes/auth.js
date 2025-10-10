@@ -310,6 +310,215 @@ router.post("/change-password", async (req, res) => {
 
 
 
+// Password Recovery: Send recovery code
+router.post("/recover-password", async (req, res) => {
+    try {
+        const { email } = req.body;
+
+        // Validate email
+        if (!email) {
+            return res.status(400).json({
+                message: "Email is required"
+            });
+        }
+
+        // Find user by email
+        const user = await User.findOne({ email });
+        
+        if (!user) {
+            // Don't reveal if email exists 
+            return res.status(200).json({
+                message: "If an account with that email exists, a recovery code has been sent"
+            });
+        }
+
+        // Generate 6-digit recovery code
+        const recoveryCode = Math.floor(100000 + Math.random() * 900000).toString();
+        
+        // Set expiration time (15 minutes from now)
+        const expiresAt = new Date(Date.now() + 15 * 60 * 1000);
+
+        // Save recovery code to user
+        user.recoveryCode = recoveryCode;
+        user.recoveryCodeExpires = expiresAt;
+        await user.save();
+
+        // In production, send email with recovery code
+        // For development, log it to console
+        console.log(`\n=== PASSWORD RECOVERY ===`);
+        console.log(`Email: ${email}`);
+        console.log(`Recovery Code: ${recoveryCode}`);
+        console.log(`Expires: ${expiresAt.toISOString()}`);
+        console.log(`========================\n`);
+
+        res.json({
+            message: "If an account with that email exists, a recovery code has been sent",
+            // For development only 
+            developmentOnly: {
+                recoveryCode: recoveryCode,
+                expiresAt: expiresAt
+            }
+        });
+
+    } catch (err) {
+        console.error("Recover password error:", err);
+        res.status(500).json({
+            message: "An error occurred. Please try again."
+        });
+    }
+});
+
+// Password Recovery: Verify recovery code
+router.post("/verify-recovery-code", async (req, res) => {
+    try {
+        const { email, recoveryCode } = req.body;
+
+        // Validate inputs
+        if (!email || !recoveryCode) {
+            return res.status(400).json({
+                message: "Email and recovery code are required"
+            });
+        }
+
+        // Find user with recovery code
+        const user = await User.findOne({ 
+            email,
+            recoveryCode,
+            recoveryCodeExpires: { $gt: Date.now() }
+        }).select('+recoveryCode +recoveryCodeExpires');
+
+        if (!user) {
+            return res.status(400).json({
+                message: "Invalid or expired recovery code"
+            });
+        }
+
+        res.json({
+            message: "Recovery code verified successfully"
+        });
+
+    } catch (err) {
+        console.error("Verify recovery code error:", err);
+        res.status(500).json({
+            message: "An error occurred. Please try again."
+        });
+    }
+});
+
+// Password Recovery: Reset password
+router.post("/reset-password", async (req, res) => {
+    try {
+        const { email, recoveryCode, newPassword } = req.body;
+
+        // Validate inputs
+        if (!email || !recoveryCode || !newPassword) {
+            return res.status(400).json({
+                message: "All fields are required"
+            });
+        }
+
+        // Find user with valid recovery code
+        const user = await User.findOne({ 
+            email,
+            recoveryCode,
+            recoveryCodeExpires: { $gt: Date.now() }
+        }).select('+recoveryCode +recoveryCodeExpires +passwordHistory');
+
+        if (!user) {
+            return res.status(400).json({
+                message: "Invalid or expired recovery code"
+            });
+        }
+
+        // Validate password strength
+        const passwordValidation = validatePasswordStrength(newPassword);
+        if (!passwordValidation.isValid) {
+            return res.status(400).json({
+                message: "Password does not meet requirements",
+                requirements: passwordValidation.errors
+            });
+        }
+
+        // Check if password was used before
+        const isUnique = await isPasswordUnique(newPassword, user.passwordHistory);
+        if (!isUnique) {
+            return res.status(400).json({
+                message: "Password was used recently. Please choose a different password."
+            });
+        }
+
+        // Hash new password
+        const hashedPassword = await hashPassword(newPassword);
+
+        // Update password and add to history
+        const oldPasswordHash = user.password;
+        user.password = hashedPassword;
+        await user.addToPasswordHistory(oldPasswordHash);
+
+        // Clear recovery code
+        user.recoveryCode = undefined;
+        user.recoveryCodeExpires = undefined;
+        await user.save();
+
+        console.log(`Password reset successful for user: ${user.username}`);
+
+        res.json({
+            message: "Password has been reset successfully. Please login with your new password."
+        });
+
+    } catch (err) {
+        console.error("Reset password error:", err);
+        res.status(500).json({
+            message: "An error occurred. Please try again."
+        });
+    }
+});
+
+// Recover Username
+router.post("/recover-username", async (req, res) => {
+    try {
+        const { email } = req.body;
+
+        // Validate email
+        if (!email) {
+            return res.status(400).json({
+                message: "Email is required"
+            });
+        }
+
+        // Find user by email
+        const user = await User.findOne({ email });
+        
+        if (!user) {
+            // Don't reveal if email exists (security best practice)
+            return res.status(200).json({
+                message: "If an account with that email exists, the username has been sent"
+            });
+        }
+
+        // In production, send email with username
+        // For development, log it to console
+        console.log(`\n=== USERNAME RECOVERY ===`);
+        console.log(`Email: ${email}`);
+        console.log(`Username: ${user.username}`);
+        console.log(`========================\n`);
+
+        res.json({
+            message: "If an account with that email exists, the username has been sent",
+            // For development only - remove in production
+            developmentOnly: {
+                username: user.username
+            }
+        });
+
+    } catch (err) {
+        console.error("Recover username error:", err);
+        res.status(500).json({
+            message: "An error occurred. Please try again."
+        });
+    }
+});
+
 // Get all users (test only - REMOVE IN PRODUCTION)
 router.get("/users", async (req, res) => {
     try {

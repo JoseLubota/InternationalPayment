@@ -17,6 +17,16 @@ const userSchema = new mongoose.Schema({
     lastPasswordChange: {
         type: Date,
         default: Date.now
+    },
+    
+    // Password Recovery Features
+    recoveryCode: {
+        type: String,
+        select: false // Don't include in queries by default
+    },
+    recoveryCodeExpires: {
+        type: Date,
+        select: false // Don't include in queries by default
     }
 }, {
     timestamps: true // Adds createdAt and updatedAt automatically
