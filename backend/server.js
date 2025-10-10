@@ -3,7 +3,9 @@ import mongoose from "mongoose";
 import cors from "cors";
 import dotenv from "dotenv";
 import https from "https";
+import helmet from "helmet";
 import fs from "fs";
+import rateLimit from "express-rate-limit";
 import path from "path";
 import { fileURLToPath } from "url";
 import authRoutes from "./routes/auth.js";
@@ -16,6 +18,17 @@ dotenv.config();
 
 const app = express();
 
+// Set secure HTTP Headers
+app.use(helmet.contentSecurityPolicy({
+    directives : {
+        default: ["'self'"],
+        scriptSrc: ["'slfe'", "'unsafe-inline'", "'https://cdn.example.com'"],
+        styleSrc: ["'self'", "data:"],
+        fontSrc: ["'self'", "https://fonts.gstatic.com"],
+        },
+    })
+);
+
 // CORS configuration to allow frontend access
 app.use(cors({
     origin: ['http://localhost:3000', 'https://localhost:3000'],
@@ -24,6 +37,26 @@ app.use(cors({
     allowedHeaders: ['Content-Type', 'Authorization']
 }));
 
+// Limit repeated requests to public API
+const limiter = rateLimit({
+    // 15 minutes
+    windowMs: 15 * 60 * 1000, 
+    // Limit each IP to 100 reuests per windoMs
+    limit: 100,
+    message: {message: "Too many requests, please try again later."},
+    standardHeaders: true,
+    legacyHeaders: false,
+});
+
+// Enforce HTTPS when deployed
+app.enable("trust proxy");
+app.use((req, res, next) => {
+    if(process.env.NODE_ENV === "production" && req.headers["x-forwarded-proto"] !== "https") {
+        return res.redirect("https://" + req.headers.host + req.url);
+    }
+    next();
+});
+
 // Basic middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -31,6 +64,22 @@ app.use(express.urlencoded({ extended: true }));
 // Test endpoint
 app.get("/test", (req, res) => {
     res.json({ message: "Server is running!" });
+});
+
+// Web application Firewall - protection against SQL Injection, XSS, etc
+app.use((req, res, next) => {
+    const payload = JSON.stringify(req.body);
+    const backlist = [
+        /<script.*?>.*?<\/script>/gi,
+        /(\%27)(\')|(\-\-)|(\%23)|(#)/i,
+        /<.*?on\w+=/gi
+    ];
+    for(const pattern of backlist){
+        if(pattern.test(payload)){
+            return res.status(403).json({message: "Malicious payload detected."})
+        }
+    }
+    next();
 });
 
 // Routes
