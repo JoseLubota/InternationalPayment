@@ -18,7 +18,7 @@ export default function Payment() {
     useEffect(() => {
         const loadCurrencies = async () => {
             try {
-                const response = await fetch("http://localhost:4000/api/payments/currencies/supported");
+                const response = await fetch("https://localhost:4000/api/payments/currencies/supported");
                 if (response.ok) {
                     const data = await response.json();
                     setCurrencies(data.currencies);
@@ -104,7 +104,7 @@ export default function Payment() {
                 beneficiaryAddress: "Default Address"
             };
 
-            const response = await fetch("http://localhost:4000/api/payments/create", {
+            const response = await fetch("https://localhost:4000/api/payments/create", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",

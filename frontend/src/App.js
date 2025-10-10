@@ -1,28 +1,48 @@
 import './App.css';
-import UserLogin from "./components/userLogin";
-import Home from "./components/home"
-import RecoverUsername from './components/recoverUsername';
-import RecoverPassword from './components/recoverPassword';
-import Register from "./components/register";
-import Payment from "./components/payment";
-import PaymentConfirmation from "./components/paymentConfirmation";
 import { Routes, Route, BrowserRouter } from 'react-router-dom';
+import {Helmet} from "react-helmet";
 
 function App() {
-  return (
-    <BrowserRouter>
-    <div>
-      <Routes>
-      <Route exact path='/' element={<Home/>} />
-        <Route exact path='/login' element={<UserLogin/>} />
-        <Route path='/register' element ={<Register/>} />
-        <Route path='/recoverUsername' element ={<RecoverUsername/>} />
-        <Route path='/recoverPassword' element ={<RecoverPassword/>} />
-        <Route path='/payment' element={<Payment/>} />
-        <Route path='/payment-confirmation' element={<PaymentConfirmation/>} />
-      </Routes>
-    </div>
-    </BrowserRouter>
-  );
+    return (
+        <BrowserRouter>
+
+          <Helmet>
+            <meta charSet='utf-8'/>
+            <title>Secure App</title>
+            <meta
+              httpEquiv="Content-Security-Policy"
+              content="
+                  default-src 'self';
+                  script-src 'self';
+                  style-src 'self' 'unsafe-inline';
+                  img-src 'self' data:;
+                  connect-src 'self' https://localhost:4000;
+                  frame-ancestors 'none';
+                  "
+            />
+          </Helmet>
+            <div>
+                <Routes>
+                    {/* Dashboard Routes */}
+                    <Route exact path='/' element={<HomeView />} />
+                    <Route path='/dashboard' element={<DashboardView />} />
+
+                    {/* Auth Routes */}
+                    <Route exact path='/login' element={<LoginView />} />
+                    <Route path='/register' element={<RegisterView />} />
+                    <Route path='/account-registered' element={<AccountRegisteredView />} />
+                    <Route path='/recoverUsername' element={<RecoverUsernameView />} />
+                    <Route path='/recoverPassword' element={<RecoverPasswordView />} />
+                    <Route path='/recover-password' element={<RecoverPasswordView />} />
+
+                    {/* Transaction Routes */}
+                    <Route path='/send-money' element={<SendMoneyView />} />
+                    <Route path='/money-sent' element={<MoneySentView />} />
+                    <Route path='/money-received' element={<MoneyReceivedView />} />
+                    <Route path='/verify-transactions' element={<VerifyTransactionsView />} />
+                </Routes>
+            </div>
+        </BrowserRouter>
+    );
 }
 export default App;
