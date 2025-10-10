@@ -1,4 +1,4 @@
-﻿import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import Card from '../../components/shared/Card';
 import { PrimaryButton } from '../../components/shared/Button';
@@ -15,7 +15,7 @@ export default function MoneySentView() {
                 const transaction = JSON.parse(lastTransaction);
                 setTransactionData(transaction);
             } catch (error) {
-                console.error("Error parsing transaction data:", error);
+                // Error parsing transaction data - will show error UI
             }
         }
         setLoading(false);

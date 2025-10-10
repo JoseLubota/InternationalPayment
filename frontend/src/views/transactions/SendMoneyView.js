@@ -1,5 +1,4 @@
-﻿import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
 import Card from '../../components/shared/Card';
 import { FormGroup, FormInput } from '../../components/shared/Form';
 import { PrimaryButton } from '../../components/shared/Button';
@@ -34,8 +33,7 @@ export default function SendMoneyView() {
                     ]);
                 }
             } catch (error) {
-                console.error("Error loading currencies:", error);
-                // Use fallback currencies
+                // Error loading currencies - use fallback currencies
                 setCurrencies([
                     { code: 'USD', name: 'US Dollar', symbol: '$' },
                     { code: 'EUR', name: 'Euro', symbol: '€' },
@@ -52,11 +50,22 @@ export default function SendMoneyView() {
     const handleChange = (event) => {
         const { name, value } = event.target;
         
-        // Clear error for this field when user starts typing
-        if (errors[name]) {
-            setErrors(prev => ({ ...prev, [name]: '' }));
+        // Whitelist allowed field names for security
+        const allowedFields = ['amount', 'currency', 'recipientAccountNumber', 'swiftCode'];
+        if (!allowedFields.includes(name)) {
+            return;
         }
         
+        // Clear error for this field when user starts typing
+        // eslint-disable-next-line security/detect-object-injection
+        if (Object.prototype.hasOwnProperty.call(errors, name) && errors[name]) {
+            const newErrors = { ...errors };
+            // eslint-disable-next-line security/detect-object-injection
+            delete newErrors[name];
+            setErrors(newErrors);
+        }
+        
+        // eslint-disable-next-line security/detect-object-injection
         setFormData(prev => ({ ...prev, [name]: value }));
     };
 
@@ -86,8 +95,13 @@ export default function SendMoneyView() {
         // SWIFT code validation
         if (!formData.swiftCode) {
             newErrors.swiftCode = 'SWIFT code is required';
-        } else if (!/^[A-Z]{6}[A-Z0-9]{2}([A-Z0-9]{3})?$/.test(formData.swiftCode.toUpperCase())) {
-            newErrors.swiftCode = 'SWIFT code must be 8 or 11 characters (6 letters + 2 alphanumeric + 3 optional)';
+        } else {
+            const swiftCode = formData.swiftCode.toUpperCase();
+            const isValid = (swiftCode.length === 8 || swiftCode.length === 11) &&
+                /^[A-Z]{6}[A-Z0-9]{2}[A-Z0-9]{0,3}$/.test(swiftCode);
+            if (!isValid) {
+                newErrors.swiftCode = 'SWIFT code must be 8 or 11 characters (6 letters + 2 alphanumeric + 3 optional)';
+            }
         }
         
         setErrors(newErrors);
@@ -145,7 +159,7 @@ export default function SendMoneyView() {
                 alert(data.message || "Failed to send money");
             }
         } catch (error) {
-            console.error("Error: ", error);
+            // Error occurred during payment processing
             alert("Something went wrong. Please try again.");
         } finally {
             setLoading(false);

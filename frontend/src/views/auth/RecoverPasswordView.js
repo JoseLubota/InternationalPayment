@@ -1,4 +1,4 @@
-﻿import React, { useState } from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import Card from '../../components/shared/Card';
 import { FormGroup, FormInput } from '../../components/shared/Form';
@@ -37,7 +37,7 @@ export default function RecoverPasswordView() {
                 alert(data.message || "Failed to send recovery code");
             }
         } catch (error) {
-            console.error("Error: ", error);
+            // Error sending recovery code
             alert("Something went wrong. Try again.");
         }
     };
@@ -61,7 +61,7 @@ export default function RecoverPasswordView() {
                 alert(data.message || "Invalid recovery code");
             }
         } catch (error) {
-            console.error("Error: ", error);
+            // Error verifying recovery code
             alert("Something went wrong. Try again.");
         }
     };
@@ -95,7 +95,7 @@ export default function RecoverPasswordView() {
                 alert(data.message || "Failed to reset password");
             }
         } catch (error) {
-            console.error("Error: ", error);
+            // Error resetting password
             alert("Something went wrong. Try again.");
         }
     };

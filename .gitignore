@@ -47,3 +47,17 @@ yarn-error.log*
 .Trashes
 ehthumbs.db
 Thumbs.db
+
+# Test coverage
+coverage/
+*.lcov
+.nyc_output/
+
+# Security scan reports
+audit-*.json
+eslint-*.json
+gitleaks-report.json
+trivy-report.json
+
+# CircleCI local
+.circleci/local/

@@ -1,4 +1,4 @@
-﻿import React, { useState } from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import Card from '../../components/shared/Card';
 import { FormGroup, FormInput } from '../../components/shared/Form';
@@ -35,7 +35,7 @@ export default function RegisterView() {
                 alert(data.message || "Could not save user, Please try again");
             }
         } catch (error) {
-            console.error(error);
+            // Registration error occurred
             alert("Registration Failed");
         }
     };

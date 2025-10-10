@@ -1,4 +1,4 @@
-﻿import React from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import Card from '../../components/shared/Card';
 import { PrimaryButton } from '../../components/shared/Button';

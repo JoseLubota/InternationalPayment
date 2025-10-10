@@ -1,4 +1,4 @@
-﻿import React, { useState } from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import Card from '../../components/shared/Card';
 import { FormGroup, FormInput } from '../../components/shared/Form';
@@ -40,7 +40,7 @@ export default function LoginView() {
             alert("Login Successful!");
             window.location.href = "/dashboard";
         } catch (error) {
-            console.error("Error: ", error);
+            // Login error occurred
             alert("Something went wrong. Try again.");
         }
     };

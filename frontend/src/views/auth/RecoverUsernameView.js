@@ -1,4 +1,4 @@
-﻿import React, { useState } from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import Card from '../../components/shared/Card';
 import { FormGroup, FormInput } from '../../components/shared/Form';
@@ -34,7 +34,7 @@ export default function RecoverUsernameView() {
                 alert(data.message || "Failed to send username");
             }
         } catch (error) {
-            console.error("Error: ", error);
+            // Error sending username recovery
             alert("Something went wrong. Try again.");
         }
     };
