@@ -22,7 +22,7 @@ const app = express();
 app.use(helmet.contentSecurityPolicy({
     directives : {
         default: ["'self'"],
-        scriptSrc: ["'slfe'", "'unsafe-inline'", "'https://cdn.example.com'"],
+        scriptSrc: ["'self'", "'unsafe-inline'", "'https://cdn.example.com'"],
         styleSrc: ["'self'", "data:"],
         fontSrc: ["'self'", "https://fonts.gstatic.com"],
         },
