@@ -102,7 +102,30 @@ router.get("/my-payments", verifyToken, async (req, res) => {
     try {
         const payments = await Payment.find({ userId: req.user.id })
             .sort({ createdAt: -1 })
-            .select('-__v');
+            .select('-__v')
+            .populate('userId', 'username email');
+
+        res.json({
+            payments,
+            count: payments.length
+        });
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+});
+
+// Get received payments (simulated - shows completed payments with details)
+router.get("/received", verifyToken, async (req, res) => {
+    try {
+        // For now, we'll return completed payments as "received" money
+        // In a real system, you'd match beneficiaryAccountNumber to current user's account
+        const payments = await Payment.find({ 
+            status: 'completed'
+        })
+            .sort({ createdAt: -1 })
+            .limit(10)
+            .select('-__v')
+            .populate('userId', 'username email');
 
         res.json({
             payments,
