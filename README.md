@@ -142,8 +142,6 @@ Create a `.env` file in the backend directory:
 ```env
 # Database
 ATLAS_URI={Connection-String-Here}
-# Or for MongoDB Atlas:
-# ATLAS_URI={Connection-String-Here}
 
 # JWT Secret
 JWT_SECRET={Secret-JWT-Key-Here}
