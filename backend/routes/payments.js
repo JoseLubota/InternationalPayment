@@ -62,6 +62,7 @@ router.post("/create", verifyToken, async (req, res) => {
         }
 
         // Create new payment transaction with SWIFT as default provider
+        // Auto-complete for demo purposes (in production, this would be 'pending')
         const newPayment = new Payment({
             userId: req.user.id,
             amount,
@@ -72,7 +73,7 @@ router.post("/create", verifyToken, async (req, res) => {
             beneficiaryBankName: beneficiaryBankName || "Default Bank",
             swiftCode,
             beneficiaryAddress: beneficiaryAddress || "Default Address",
-            status: 'pending'
+            status: 'completed' // Auto-complete for demo/testing
         });
 
         await newPayment.save();
@@ -114,11 +115,10 @@ router.get("/my-payments", verifyToken, async (req, res) => {
     }
 });
 
-// Get received payments (simulated - shows completed payments with details)
+// Get received payments 
 router.get("/received", verifyToken, async (req, res) => {
     try {
-        // For now, we'll return completed payments as "received" money
-        // In a real system, you'd match beneficiaryAccountNumber to current user's account
+    
         const payments = await Payment.find({ 
             status: 'completed'
         })
@@ -156,7 +156,7 @@ router.get("/:transactionId", verifyToken, async (req, res) => {
     }
 });
 
-// Update payment status for payment processing)
+// Update payment status (for payment processing)
 router.patch("/:transactionId/status", verifyToken, async (req, res) => {
     try {
         const { transactionId } = req.params;
@@ -184,6 +184,23 @@ router.patch("/:transactionId/status", verifyToken, async (req, res) => {
                 status: payment.status,
                 updatedAt: payment.updatedAt
             }
+        });
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+});
+
+// Complete all pending payments for current user (for testing purposes)
+router.post("/complete-my-payments", verifyToken, async (req, res) => {
+    try {
+        const result = await Payment.updateMany(
+            { userId: req.user.id, status: 'pending' },
+            { status: 'completed', updatedAt: Date.now() }
+        );
+
+        res.json({
+            message: "Payments marked as completed",
+            modifiedCount: result.modifiedCount
         });
     } catch (error) {
         res.status(500).json({ error: error.message });

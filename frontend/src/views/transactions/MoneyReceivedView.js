@@ -28,9 +28,8 @@ export default function MoneyReceivedView() {
 
                 if (response.ok) {
                     const data = await response.json();
-                    // Filter for completed payments
-                    const completedPayments = data.payments.filter(p => p.status === 'completed');
-                    setPayments(completedPayments);
+                    // Show all payments (you can filter by status if needed)
+                    setPayments(data.payments);
                 } else {
                     setError("Failed to load payment history.");
                 }
@@ -60,6 +59,22 @@ export default function MoneyReceivedView() {
             style: 'currency',
             currency: currency || 'USD'
         }).format(amount);
+    };
+
+    const getStatusColor = (status) => {
+        const colors = {
+            'completed': '#28a745',
+            'pending': '#ffc107',
+            'processing': '#17a2b8',
+            'failed': '#dc3545',
+            'cancelled': '#6c757d'
+        };
+        // eslint-disable-next-line security/detect-object-injection
+        return colors[status] || '#6c757d';
+    };
+
+    const getStatusDisplay = (status) => {
+        return status ? status.toUpperCase() : 'UNKNOWN';
     };
 
     if (loading) {
@@ -128,8 +143,8 @@ export default function MoneyReceivedView() {
                     <div className="card-icon">
                         🏦
                     </div>
-                    <h1 className="card-title">Completed Transactions</h1>
-                    <p className="card-subtitle">You have {payments.length} completed transaction{payments.length !== 1 ? 's' : ''}</p>
+                    <h1 className="card-title">Payment History</h1>
+                    <p className="card-subtitle">You have {payments.length} transaction{payments.length !== 1 ? 's' : ''}</p>
                 </div>
 
                 <div style={{ marginTop: '24px' }}>
@@ -150,18 +165,18 @@ export default function MoneyReceivedView() {
                                 alignItems: 'center',
                                 marginBottom: '12px'
                             }}>
-                                <div style={{ fontSize: '18px', fontWeight: 'bold', color: '#28a745' }}>
+                                <div style={{ fontSize: '18px', fontWeight: 'bold', color: getStatusColor(payment.status) }}>
                                     {formatCurrency(payment.amount, payment.currency)}
                                 </div>
                                 <div style={{ 
                                     fontSize: '12px', 
                                     padding: '4px 8px', 
-                                    backgroundColor: '#28a745', 
+                                    backgroundColor: getStatusColor(payment.status), 
                                     color: 'white',
                                     borderRadius: '4px',
                                     fontWeight: '500'
                                 }}>
-                                    COMPLETED
+                                    {getStatusDisplay(payment.status)}
                                 </div>
                             </div>
 
