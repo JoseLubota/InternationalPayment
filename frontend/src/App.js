@@ -2,6 +2,23 @@ import './App.css';
 import { Routes, Route, BrowserRouter } from 'react-router-dom';
 import {Helmet} from "react-helmet";
 
+// Dashboard Views
+import HomeView from './views/dashboard/HomeView';
+import DashboardView from './views/dashboard/DashboardView';
+
+// Auth Views
+import LoginView from './views/auth/LoginView';
+import RegisterView from './views/auth/RegisterView';
+import AccountRegisteredView from './views/auth/AccountRegisteredView';
+import RecoverUsernameView from './views/auth/RecoverUsernameView';
+import RecoverPasswordView from './views/auth/RecoverPasswordView';
+
+// Transaction Views
+import SendMoneyView from './views/transactions/SendMoneyView';
+import MoneySentView from './views/transactions/MoneySentView';
+import MoneyReceivedView from './views/transactions/MoneyReceivedView';
+import VerifyTransactionsView from './views/transactions/VerifyTransactionsView';
+
 function App() {
     return (
         <BrowserRouter>
